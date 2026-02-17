@@ -8,6 +8,9 @@
 #ifndef OTA_UPDATE_H_
 #define OTA_UPDATE_H_
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #define OTA_SOF 0XAA	//Start of Frame
 #define OTA_EOF 0XBB	//End of Frame
 #define OTA_ACK 0		//ACK
@@ -71,7 +74,7 @@ typedef struct
 	uint8_t  cmd;
 	uint32_t crc;
 	uint8_t  eof;
-}__attribute__((packed)) OTA_CMD;
+}__attribute__((packed)) OTA_COMMAND;
 
 
 /*OTA packet format for HEADER*/

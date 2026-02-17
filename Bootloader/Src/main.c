@@ -27,6 +27,7 @@
 #include "gpio.h"
 #include "usart.h"
 #include "myprintf.h"
+#include "ota_update.h"
 
 
 #define APP_ADDR 0x08020000
