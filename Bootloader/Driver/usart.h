@@ -4,10 +4,9 @@
  *  Created on: Feb 13, 2026
  *      Author: iman
  */
-
-
 #include "stm32f401xe.h"
 #include "systick.h"
+#include <stdbool.h>
 
 #ifndef USART_H_
 #define USART_H_
@@ -44,8 +43,9 @@ void uart_txint(void);
 void uart_putchar(char *sr);
 
 void uart_putchar_integer(int n);
-void wait_empty_buff(void);
 
+void uart2int_putchar(char charw);
+void wait_empty_buff(void);
 
 
 void usart_rcc (USART_TypeDef *USARTx);
@@ -62,5 +62,14 @@ void usart_init (USART_TypeDef *USARTx, GPIO_TypeDef *GPIOx, uint8_t PIN, uint8_
 
 void uart2_putcharpoll(char charw);
 
+
+
+/*Receive function*/
+
+void uart2rx_int(void);
+
+void uart2_read_int(void);
+
+bool uart2_read(char *charw);
 
 #endif /* USART_H_ */

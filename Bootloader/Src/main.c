@@ -31,7 +31,7 @@
 
 
 #define APP_ADDR 0x08020000
-#define MAJOR 0
+#define MAJOR 3
 #define MINOR 1
 
 static void goto_application(void);
@@ -50,6 +50,7 @@ int main(void)
 	gpio_rcc(GPIOA);
 	gpio_init(GPIOA, PIN5, OUTPUT);
 	gpio_set(GPIOA, PIN5);
+	gpioc_init(GPIOC, PIN13);
 
 
 	myprintf_init();
@@ -70,7 +71,7 @@ int main(void)
 
 
 		/*Check User button state for 3 seconds*/
-		if((OTA_PIN_State != GPIO_PIN_SET) || (current_tick > nextTick)){
+		if((OTA_PIN_State == GPIO_PIN_RESET) || (current_tick > nextTick)){
 
 			/*only when timeout or User button is pressed*/
 			break;
@@ -111,6 +112,7 @@ static void goto_application(void){
 
 	myprintf("Gonna Jump to Application\n");
 	wait_empty_buff();
+
 
 	void (*app_reset_handler)(void) = (void*)(*(volatile uint32_t*)(APP_ADDR + 4));
 

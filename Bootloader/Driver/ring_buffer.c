@@ -16,18 +16,23 @@ struct ringbuffer{
 	uint8_t tail;
 };
 
+size_t ringbuffer_obj_size(void){
+	return sizeof(ringbuffer);
+}
 
-ringbuffer *create_ring_buff(uint8_t *array, uint8_t size){
+void init_ring_buff(void *mem, uint8_t *array, uint8_t size){
 
-	static ringbuffer rb;
-	rb.buffer = array;
-	rb.size = size;
-	rb.head = 0;
-	rb.tail = 0;
-	return &rb;
+	struct ringbuffer *rb = mem;
+	rb->buffer = array;
+	rb->size = size;
+	rb->head = 0;
+	rb->tail = 0;
 
 }
 
+ringbuffer *mem_to_ringbuff(void *mem){
+	return (ringbuffer *)mem;
+}
 
 void put_ring_buff(ringbuffer *rb, uint8_t data){
 
@@ -76,6 +81,45 @@ bool full_ring_buff(ringbuffer *rb){
 
 	return headadd == rb->tail;
 
+}
+
+
+bool full_read_ringbuff(ringbuffer *rb){
+
+	uint8_t tailadd = rb->tail+1;
+
+	if(tailadd == rb->size){
+		tailadd = 0;
+	}
+
+	return tailadd == rb->head;
+}
+
+uint8_t predict_ring_buff(ringbuffer *rb){
+
+	uint8_t tailadd = rb->tail+1;
+	if (tailadd == rb->size){
+		tailadd = 0;
+	}
+	uint8_t taildadd = tailadd+1;
+	if (taildadd == rb->size){
+		taildadd = 0;
+	}
+	return taildadd == rb->head;
+
+}
+
+bool tailplus_ring_buff(ringbuffer *rb){
+	uint8_t tailadd = rb->tail+2;
+
+	if (tailadd == rb->size){
+		tailadd = 0;
+	}
+	if (tailadd == rb->size+1){
+		tailadd = 1;
+	}
+
+	return tailadd == rb->head;
 }
 
 bool guard_ring_buff(ringbuffer *rb){

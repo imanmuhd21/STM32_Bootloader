@@ -79,8 +79,8 @@ void gpio_reset(GPIO_TypeDef *GPIOx, uint8_t PIN){
 void gpioc_init(GPIO_TypeDef *GPIOx, uint8_t PIN){
 	gpio_rcc(GPIOx);
 	gpio_init(GPIOx, PIN, INPUT);
-	GPIOx->PUPDR &= ~(2UL << (PIN*2));
-	GPIOx->PUPDR |= (1UL << (PIN*2));
+	GPIOx->PUPDR &= ~(3UL << (PIN*2));
+	GPIOx->PUPDR |= (2UL << (PIN*2));
 }
 
 GPIO_PIN_STATE gpio_read_status(GPIO_TypeDef* GPIOx, uint8_t PIN){
@@ -88,7 +88,7 @@ GPIO_PIN_STATE gpio_read_status(GPIO_TypeDef* GPIOx, uint8_t PIN){
 
 	GPIO_PIN_STATE bitstatus;
 
-	if((GPIOx->IDR & (1UL << PIN)) != (uint32_t)(GPIO_PIN_SET))
+	if((GPIOC->IDR & (1U << PIN)) == (uint32_t)(GPIO_PIN_RESET))
 	{
 		bitstatus = GPIO_PIN_RESET;
 	}
