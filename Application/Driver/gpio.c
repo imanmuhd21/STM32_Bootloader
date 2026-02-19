@@ -143,23 +143,3 @@ void gpio_reset(GPIO_TypeDef *GPIOx, uint8_t PIN){
 	GPIOx->BSRR |= BR5;
 }
 
-
-bitstatus gpio_read_status(GPIO_TypeDef* GPIOx, uint8_t PIN){
-	gpio_rcc(GPIOx);
-	gpio_init(GPIOx, PIN, INPUT);
-
-	GPIO_PIN_STATE bitstatus;
-
-	GPIOx->PUPDR &= ~(2UL << (PIN*2));
-	GPIOx->PUPDR |= (1UL << (PIN*2));
-
-	if((GPIOx->IDR & (1UL << PIN)) != (uint32_t)(GPIO_PIN_SET))
-	{
-		bitstatus = GPIO_PIN_RESET;
-	}
-	else{
-		bitstatus = GPIO_PIN_SET;
-	}
-
-	return bitstatus;
-}

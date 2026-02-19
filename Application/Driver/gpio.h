@@ -74,11 +74,6 @@
 #define ALTFUNC 2
 #define ANALOG 3
 
-typedef enum{
-	GPIO_PIN_RESET = 0,
-	GPIO_PIN_SET
-}GPIO_PIN_STATE;
-
 
 void gpio_rcc(GPIO_TypeDef *GPIOx);
 
@@ -90,7 +85,5 @@ void gpio_set(GPIO_TypeDef *GPIOx, uint8_t PIN);
 
 void gpio_reset(GPIO_TypeDef *GPIOx, uint8_t PIN);
 
-
-GPIO_PIN_STATE gpio_read_status(GPIO_TypeDef *GPIOx, uint8_t PIN);
 
 #endif /* GPIO_H_ */
