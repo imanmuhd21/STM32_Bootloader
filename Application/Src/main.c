@@ -33,7 +33,7 @@
 
 //Only when buffer is 4 can we use my printf properly. If buffer more than 5 please comment out myprintf() and related variable
 #define MAJOR 1
-#define MINOR 1
+#define MINOR 2
 
 const uint32_t APP_Version[2] = {MAJOR, MINOR};
 

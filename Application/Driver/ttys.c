@@ -60,8 +60,8 @@ void ttys_run(void){
 		k++;
 		if (k > 1){
 			if (c == '\r' || c == '\n'){
-				ttysbuff.buffer[ttysbuff.idx] = '\0';
 
+				ttysbuff.buffer[ttysbuff.idx] = '\0';
 				ttysbuff.idx = 0;
 				ttysbuff.key = 0;
 				myprintf("\n%c", PROMPT);
