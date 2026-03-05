@@ -11,6 +11,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "flash.h"
+
 #define OTA_SOF 0XAA	//Start of Frame
 #define OTA_EOF 0XBB	//End of Frame
 #define OTA_ACK 0		//ACK
@@ -19,7 +21,7 @@
 #define APP_FLASH_ADDR 0x08020000	//Application's Flash address
 
 #define OTA_MAX_DATA_SIZE 1024		//Max data size
-#define OTA_DATA_OVERHEAD_SIZE 1	//Data overhead
+#define OTA_DATA_OVERHEAD_SIZE 9	//Data overhead
 #define OTA_MAX_PACKET_SIZE (OTA_DATA_OVERHEAD_SIZE + OTA_MAX_DATA_SIZE)
 
 
@@ -30,7 +32,7 @@ typedef enum{
 }OTA_EX_;
 
 
-/*Type of Packet*/
+/*Type of Packet = packet_type*/
 typedef enum{
 	OTA_PACKET_TYPE_CMD 	 = 0, //command
 	OTA_PACKET_TYPE_DATA 	 = 1, //data
@@ -42,19 +44,20 @@ typedef enum{
 /*State machine for OTA*/
 typedef enum{
 	OTA_STATE_IDLE 		= 0,
-	OTA__STATE_START 	= 1,
+	OTA_STATE_START 	= 1,
 	OTA_STATE_HEADER 	= 2,
 	OTA_STATE_DATA 		= 3,
 	OTA_STATE_END		= 4,
 }OTA_STATE;
 
 
-/*command type*/
+/*command type = cmd*/
 typedef enum{
 	OTA_CMD_START,
 	OTA_CMD_END,
 	OTA_CMD_ABORT,
 }OTA_CMD;
+
 
 
 typedef struct
@@ -64,6 +67,7 @@ typedef struct
 	uint32_t reserved1;
 	uint32_t reserved2;
 }__attribute__((packed)) meta_info;
+
 
 /*OTA packet format for COMMAND*/
 typedef struct
@@ -83,7 +87,7 @@ typedef struct
 	uint8_t   sof;
 	uint8_t   packet_type;
 	uint16_t  length;
-	meta_info metada;
+	meta_info metadata;
 	uint32_t  crc;
 	uint8_t   eof;
 }__attribute__((packed)) OTA_HEADER;
@@ -107,7 +111,7 @@ typedef struct
 	uint8_t  sof;
 	uint8_t  packet_type;
 	uint16_t length;
-	uint16_t status;
+	uint8_t status;
 	uint32_t crc;
 	uint8_t  eof;
 }__attribute__((packed))OTA_RESPONSE;
