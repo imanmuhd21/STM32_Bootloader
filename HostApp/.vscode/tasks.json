@@ -1,0 +1,30 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build OTA PC Tool",
+            "command": "C:\\gcc15.2.0\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "etx_ota_update_main.c",
+                "RS232\\rs232.c",
+                "-IRS232",
+                "-Wall",
+                "-Wextra",
+                "-O2",
+                "-o",
+                "etx_ota_update_main.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
