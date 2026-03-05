@@ -16,12 +16,11 @@ void myprintf_init(void){
     // 1. Enable clocks
     gpio_rcc(GPIOA);
 
-    gpio_init(GPIOA, PIN2, ALTFUNC);
+    gpio_init(GPIOA, PIN11, ALTFUNC);
 
-    usart_init(USART2, GPIOA, PIN2, ALTFUNC7);
-    usart_rcc(USART2);
+    usart_init(USART6, GPIOA, PIN11, ALTFUNC8);
 
-    uart_txint();
+    uart6_txint();
 }
 
 void myprintf(char *sr, ...){
@@ -35,27 +34,27 @@ void myprintf(char *sr, ...){
 
 			if (sr[i] == 'c'){
 				char c = (char)va_arg(args, int);
-				uart2_putchar_int(c);
+				uart6_putchar_int(c);
 			}
 			else if (sr[i] == 'd'){
 				int d = va_arg(args, int);
-				uart_putchar_integer(d);
+				uart6_putchar_integer(d);
 			}
 			else if (sr[i] == 's'){
 				char *word = va_arg(args, char*);
-				uart_putchar(word);
+				uart6_putchar(word);
 			}
 			else{
-				uart2_putchar_int(sr[i]);
+				uart6_putchar_int(sr[i]);
 			}
 		}
 		else if (sr[i] == '\n'){
-			uart2_putchar_int('\n');
-			uart2_putchar_int('\r');
+			uart6_putchar_int('\n');
+			uart6_putchar_int('\r');
 		}
 		else{
 
-			uart2_putchar_int(sr[i]);
+			uart6_putchar_int(sr[i]);
 
 		}
 
