@@ -14,6 +14,8 @@
 #define APB1CLK SYSCLK
 
 #define USART2EN (1UL << 17)
+#define USART6EN (1UL << 5)
+#define USART1EN (1UL << 4)
 
 #define ALTFUNC0 0
 #define ALTFUNC1 1
@@ -46,15 +48,9 @@ void uart_putchar_integer(int n);
 
 void uart2int_putchar(char charw);
 void wait_empty_buff(void);
+void wait_empty_buff6(void);
 
 
-void usart_rcc (USART_TypeDef *USARTx);
-
-void altfunc (GPIO_TypeDef *GPIOx, uint8_t PIN, uint8_t AF);
-
-void uart_set_baudrate115200(USART_TypeDef *USARTx, uint32_t PeriphCLk);
-
-uint32_t compute_uart_baudrate(uint32_t PeriphCLK, uint32_t Baudrate);
 
 void uart2_tx (void);
 
@@ -63,13 +59,28 @@ void usart_init (USART_TypeDef *USARTx, GPIO_TypeDef *GPIOx, uint8_t PIN, uint8_
 void uart2_putcharpoll(char charw);
 
 
+void uart2_transmit(uint8_t *buff, uint16_t len); //usage in OTA
 
-/*Receive function*/
 
-void uart2rx_int(void);
+void uart6_putchar_int(char charw);
+
+void uart6_txint(void);
+
+void uart6_putchar(char *sr);
+
+void uart6_putchar_integer(int n);
+
+
+
+
+/*--------------------Receive function-------------------*/
+
+void uart2rx_init(void);
 
 void uart2_read_int(void);
 
-bool uart2_read(char *charw);
+bool uart2_read(uint8_t *charw);
+
+bool uart2_receive(uint8_t *buffer, uint16_t idx); //usage in OTA
 
 #endif /* USART_H_ */

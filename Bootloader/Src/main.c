@@ -55,6 +55,16 @@ int main(void)
 
 	myprintf_init();
 
+
+	/*This is initializing UART2 TX and RX for OTA*/
+    gpio_init(GPIOA, PIN2, ALTFUNC);
+    usart_init(USART2, GPIOA, PIN2, ALTFUNC7);
+    uart_txint();
+
+	gpio_init(GPIOA, PIN3, ALTFUNC);
+	usart_init(USART2, GPIOA, PIN3, ALTFUNC7);
+	uart2rx_init();
+
 	//gpioa_led5(); this is toggle mode
 
 	myprintf("Starting Bootloader (%d.%d)\n", BL_Version[0], BL_Version[1]);
@@ -111,7 +121,7 @@ int main(void)
 static void goto_application(void){
 
 	myprintf("Gonna Jump to Application\n");
-	wait_empty_buff();
+	wait_empty_buff6();
 
 
 	void (*app_reset_handler)(void) = (void*)(*(volatile uint32_t*)(APP_ADDR + 4));
